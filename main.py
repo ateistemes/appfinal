@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-import mycode
+
+from tkinter import filedialog
 from PIL import Image, ImageTk
 
+
+file = ''
 class windows(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -57,20 +60,13 @@ class MainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        pickfilebtn = tk.Button(
-            self,
-            text="pick existing image",
-            command=lambda: self.pickfile(),
-        )
-        pickfilebtn.pack(pady=0.5,padx=0.5, fill='x')
+
         self.im = Image.open('c334963f3b5977997bd2ef4ebf325ab8.jpg')
         self.im = ImageTk.PhotoImage(self.im)
         self.lbl = tk.Label(self,image=self.im).pack()
-        self.img = Image.open(self.file)
-        self.img = ImageTk.PhotoImage(self.img)
-        self.img_lbl = tk.Label(self, image=self.img).pack()
-    def pickfile(self):
-        self.file = mycode.pickfile()
+        self.btn = tk.Button(self, command= lambda: self.ask(), text="choose your file").pack(fill=tk.X)
+    def ask(self):
+        self.file = tk.filedialog.askopenfilename()
 
 
 
