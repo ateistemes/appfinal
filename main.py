@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
-
+import mycode
 from tkinter import filedialog
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 
 
-file = ''
+global file
+global reset
 class windows(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -47,6 +48,9 @@ class WelcomePage(tk.Frame):
         self.welcome_image = Image.open("175-1750430_sagiri-loli-eromangasensei-welcome-cartoon-hd-png-download.png")
         self.welcome_image = ImageTk.PhotoImage(self.welcome_image)
         self.lbl = tk.Label(self, image = self.welcome_image).pack()
+        self.logo_image = Image.open("logoalatoo.png")
+        self.logo_image = ImageTk.PhotoImage(self.logo_image)
+        self.logo = tk.Label(self,image=self.logo_image).pack(side='bottom')
         # We use the switch_window_button in order to call the show_frame() method as a lambda function
         switch_window_button = tk.Button(
             self,
@@ -65,10 +69,32 @@ class MainPage(tk.Frame):
         self.im = ImageTk.PhotoImage(self.im)
         self.lbl = tk.Label(self,image=self.im).pack()
         self.btn = tk.Button(self, command= lambda: self.ask(), text="choose your file").pack(fill=tk.X)
+        # We use the switch_window_button in order to call the show_frame() method as a lambda function
+        switch_window_button = tk.Button(
+            self,
+            text="back",
+            command=lambda: controller.show_frame(WelcomePage),
+        )
+        switch_window_button.pack(side="bottom", fill=tk.X)
     def ask(self):
-        self.file = tk.filedialog.askopenfilename()
+        global file
+        file = tk.filedialog.askopenfilename()
+        global reset
+        img = Image.open(file)
+        image = img.copy()
+        img = ImageTk.PhotoImage(img)
+        reset = Image.open(file)
+        reset = ImageTk.PhotoImage(reset)
+        mainWindow = tk.Toplevel(self, width=img.width(),height=img.height())
+        label = tk.Label(mainWindow, image=img).pack(side='left')
+        ###buttons
+        sepia = tk.Button(mainWindow, text="sepia",command=mycode.sepia(image)).pack(anchor='nw')
+        grey = tk.Button(mainWindow, text="greyshade",command=mycode.grey(image)).pack(anchor='nw')
+        blackwhite = tk.Button(mainWindow, text="black and white",command=mycode.blacwhite(image)).pack(anchor='nw')
+        negative = tk.Button(mainWindow, text="negative", command=mycode.negative(image)).pack(anchor='nw')
 
 
+        mainWindow.mainloop()
 
 
 
