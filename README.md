@@ -5,5 +5,28 @@ this is readme!
   
   
   Here is the example of grey filter
+  
+  
+  
+  
+  
+  
   ![alt text](https://github.com/ateistemes/appfinal/blob/main/testimage.jpg)
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
